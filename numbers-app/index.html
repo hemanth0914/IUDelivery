@@ -1,0 +1,24 @@
+
+<html>
+    <head>
+        <title>Arithmetic</title>
+    </head>
+    <body>
+        <section>
+            <h2>Arithmetic</h2>
+            <input type="number" name="a"/>
+            <label>+</label>
+            <input type="number" name="b"/>
+            <button onclick="add()">=</button>
+            <label id="sum"></label>
+        </section>
+        <script>
+            function add(){
+                let op1 = document.getElementsByName("a")[0];
+                let op2 = document.getElementsByName("b")[0];
+                let sum = Number(op1.value) + Number(op2.value);
+                document.getElementById("sum").innerText = sum;
+            }
+        </script>
+    </body>
+</html> 
