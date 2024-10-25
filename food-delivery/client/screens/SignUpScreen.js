@@ -15,7 +15,7 @@ const SignUpScreen = ({ navigation }) => {
 
     try {
       setLoading(true);
-      const response = await axios.post('http://10.0.0.13:8000/signup', {
+      const response = await axios.post('http://192.168.0.184:8000/signup', {
         username,
         password,
       });

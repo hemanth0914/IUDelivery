@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        'http://10.0.0.13:8000/token',
+        'http://192.168.0.13:8000/token',
         { username, password },
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       );

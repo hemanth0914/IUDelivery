@@ -50,12 +50,13 @@ const OrderScreen = () => {
                 name: user_name,  // Replace this with actual user's name
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude,
-            }
+            },
+            status: 'NotPicked'
         };
 
         try {
             console.log("orderData",orderData)
-            const response = await axios.post('http://10.0.0.13:8000/orders', orderData);
+            const response = await axios.post('http://192.168.0.13:8000/orders', orderData);
             console.log('Order placed successfully:', response.data);
             navigation.navigate('OrderPreparing');  // Navigate to the next screen
         } catch (error) {

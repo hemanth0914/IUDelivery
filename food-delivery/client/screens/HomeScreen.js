@@ -79,6 +79,10 @@ const HomeScreen = () => {
     setFilteredResults([]); // Clear the search results
   };
 
+  const navigateToDeliveryPersonView = () => {
+    navigation.navigate('DeliveryPerson'); // Ensure 'DeliveryPerson' route is configured in navigation
+  };
+
   return (
     <SafeAreaView className="bg-white">
       <StatusBar barStyle="dark-content"/>
@@ -103,6 +107,10 @@ const HomeScreen = () => {
             </TouchableOpacity>
         </View>
       </View>
+
+
+      {/* Button to Navigate to Delivery Person View */}
+      
 
       {/* Dropdown for filtered results */}
       {filteredResults.length > 0 && (
@@ -134,8 +142,23 @@ const HomeScreen = () => {
         />
       </View>
 
+      <TouchableOpacity 
+  onPress={navigateToDeliveryPersonView} 
+  style={{
+    backgroundColor: '#990000',  // Crimson red background
+    padding: 15,
+    margin: 10,
+    borderRadius: 30,  // Fully rounded corners
+    alignItems: 'center',
+  }}
+>
+  <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+    Delivery
+  </Text>
+</TouchableOpacity>
+
       {/* Main Content */}
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         {/* Categories */}
         {/* <Categories/> */}
 
