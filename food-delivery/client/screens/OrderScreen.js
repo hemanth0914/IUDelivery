@@ -56,7 +56,7 @@ const OrderScreen = () => {
 
         try {
             console.log("orderData",orderData)
-            const response = await axios.post('http://192.168.0.13:8000/orders', orderData);
+            const response = await axios.post('http://100.72.42.107:8000/orders', orderData);
             console.log('Order placed successfully:', response.data);
             navigation.navigate('OrderPreparing');  // Navigate to the next screen
         } catch (error) {

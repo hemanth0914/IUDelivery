@@ -13,6 +13,7 @@ import DeliveryScreen from './screens/DeliveryScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import LoginScreen from './screens/LoginScreen';
 import DeliveryPersonScreen from './screens/DeliveryPersonScreen';
+import OrderDetailScreen from './screens/OrderDetailScreen';
 
 const Navigation = () => {
     return (
@@ -31,6 +32,7 @@ const Navigation = () => {
             <Stack.Screen name="OrderPreparing" options={{presentation: 'fullScreenModal'}} component={OrderPreparingScreen} />
             <Stack.Screen name="Delivery" options={{presentation: 'fullScreenModal'}} component={DeliveryScreen} />
             <Stack.Screen name="DeliveryPerson" component = {DeliveryPersonScreen} />
+            <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );
