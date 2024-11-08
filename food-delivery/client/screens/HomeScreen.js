@@ -35,6 +35,10 @@ const HomeScreen = () => {
     getUserLocation();
   }, []);
 
+  const navigateToPreviousOrders = () => {
+    navigation.navigate('PreviousOrders'); // Ensure 'Orders' route is configured in navigation
+  };
+
   // Function to handle search input
   const handleSearch = (text) => {
     setSearchText(text);
@@ -156,6 +160,21 @@ const HomeScreen = () => {
     Delivery
   </Text>
 </TouchableOpacity>
+
+<TouchableOpacity 
+      onPress={navigateToPreviousOrders} 
+      style={{
+        backgroundColor: '#990000', // Change to your desired color
+        padding: 15,
+        margin: 10,
+        borderRadius: 30,
+        alignItems: 'center',
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+        My Orders
+      </Text>
+    </TouchableOpacity>
 
       {/* Main Content */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>

@@ -15,7 +15,7 @@ const DeliveryPersonScreen = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://100.72.42.107:8000/orders/notpicked');
+      const response = await fetch('http://192.168.0.107:8000/orders/notpicked');
       const data = await response.json();
       console.log('Fetched Orders:', JSON.stringify(data, null, 2));
       setOrders((prevOrders) =>
@@ -41,7 +41,7 @@ const DeliveryPersonScreen = () => {
   const handleAccept = async (order) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://100.72.42.107:8000/orders/${order._id}/status`, {
+      const response = await fetch(`http://192.168.0.107:8000/orders/${order._id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'Picked' }),

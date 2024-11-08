@@ -12,7 +12,7 @@ const OrderDetailScreen = ({ route }) => {
   const handleStatusUpdate = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://100.72.42.107:8000/orders/${order._id}/status`, {
+      const response = await fetch(`http://192.168.0.107:8000/orders/${order._id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'Order on the way' }),

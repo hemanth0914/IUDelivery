@@ -47,24 +47,25 @@ const OrderScreen = () => {
                 quantity: itemCounts[dish.id]
             })),
             user: {
-                name: user_name,  // Replace this with actual user's name
+                name: user_name,
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude,
             },
             status: 'NotPicked'
         };
-
+    
         try {
-            console.log("orderData",orderData)
-            const response = await axios.post('http://100.72.42.107:8000/orders', orderData);
+            console.log("orderData", orderData);
+            const response = await axios.post('http://192.168.0.107:8000/orders', orderData);
             console.log('Order placed successfully:', response.data);
-            navigation.navigate('OrderPreparing');  // Navigate to the next screen
+            
+            // Navigate to OrderPreparingScreen and pass the order_id
+            navigation.navigate('OrderPreparing', { order_id: response.data.order_id });
         } catch (error) {
             console.error('Error placing order:', error);
-            // You can handle the error here (e.g., show an alert)
+            Alert.alert("Order Error", "Could not place the order. Please try again.");
         }
     };
-
     return (
         <View className='bg-white flex-1'>
             <View className='relative py-4 shadow-sm flex flex-row'>

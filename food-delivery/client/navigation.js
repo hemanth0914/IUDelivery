@@ -14,6 +14,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import LoginScreen from './screens/LoginScreen';
 import DeliveryPersonScreen from './screens/DeliveryPersonScreen';
 import OrderDetailScreen from './screens/OrderDetailScreen';
+import PreviousOrdersScreen from './screens/PreviousOrdersScreen';
 
 const Navigation = () => {
     return (
@@ -33,6 +34,7 @@ const Navigation = () => {
             <Stack.Screen name="Delivery" options={{presentation: 'fullScreenModal'}} component={DeliveryScreen} />
             <Stack.Screen name="DeliveryPerson" component = {DeliveryPersonScreen} />
             <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+            <Stack.Screen name="PreviousOrders" component={PreviousOrdersScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );
