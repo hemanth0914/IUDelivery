@@ -4,20 +4,22 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native'; // Correct import
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const DeliveryPersonScreen = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  const navigation = useNavigation(); // Hook for navigation
+  const navigation = useNavigation();
+  const user_name = useSelector((state) => state.auth.name);
 
   const fetchOrders = async () => {
     try {
       const response = await fetch('http://192.168.0.107:8000/orders/notpicked');
       const data = await response.json();
-      console.log('Fetched Orders:', JSON.stringify(data, null, 2));
       setOrders((prevOrders) =>
         JSON.stringify(prevOrders) === JSON.stringify(data) ? prevOrders : data
       );
@@ -44,7 +46,10 @@ const DeliveryPersonScreen = () => {
       const response = await fetch(`http://192.168.0.107:8000/orders/${order._id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'Picked' }),
+        body: JSON.stringify({
+          status: 'Picked',
+          deliveryPerson: user_name,
+        }),
       });
 
       if (!response.ok) {
@@ -52,7 +57,6 @@ const DeliveryPersonScreen = () => {
       }
 
       Alert.alert('Order Accepted', `You have accepted the order from ${order.eatery_name}.`);
-
       navigation.navigate('OrderDetail', { order });
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -70,11 +74,11 @@ const DeliveryPersonScreen = () => {
       </View>
       <View style={styles.cardContent}>
         <View style={styles.row}>
-          <MaterialIcons name="person" size={20} color="#757575" />
+          <MaterialIcons name="person" size={20} color="#616161" />
           <Text style={styles.text}>User: {item.user.name}</Text>
         </View>
         <View style={styles.row}>
-          <MaterialIcons name="assignment" size={20} color="#757575" />
+          <MaterialIcons name="assignment" size={20} color="#616161" />
           <Text style={styles.text}>Status: {item.status}</Text>
         </View>
         <Text style={styles.subTitle}>Dishes:</Text>
@@ -88,10 +92,15 @@ const DeliveryPersonScreen = () => {
           )}
         />
         <TouchableOpacity 
-          style={styles.acceptButton} 
+          style={styles.acceptButtonContainer} 
           onPress={() => handleAccept(item)}
         >
-          <Text style={styles.acceptButtonText}>Accept</Text>
+          <LinearGradient
+            colors={['#990000', '#770000']}
+            style={styles.acceptButton}
+          >
+            <Text style={styles.acceptButtonText}>Accept</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     </View>
@@ -100,7 +109,7 @@ const DeliveryPersonScreen = () => {
   if (loading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4CAF50" />
+        <ActivityIndicator size={40} color="#990000" />
       </View>
     );
   }
@@ -122,16 +131,70 @@ const DeliveryPersonScreen = () => {
 export default DeliveryPersonScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5F5' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  card: { backgroundColor: '#fff', borderRadius: 10, margin: 16, padding: 16, elevation: 3 },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  eateryName: { fontSize: 18, fontWeight: 'bold', marginLeft: 8, color: '#990000' },
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    margin: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eeeeee',
+    paddingBottom: 8,
+  },
+  eateryName: { 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    marginLeft: 8, 
+    color: '#990000' 
+  },
   cardContent: { marginTop: 8 },
-  row: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
-  text: { fontSize: 16, color: '#424242', marginLeft: 8 },
-  subTitle: { fontSize: 16, fontWeight: 'bold', marginTop: 8, color: '#757575' },
-  acceptButton: { backgroundColor: '#990000', padding: 10, borderRadius: 5, marginTop: 16 },
-  acceptButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  emptyText: { textAlign: 'center', marginTop: 20, fontSize: 18, color: '#757575' },
+  row: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    marginBottom: 6 
+  },
+  text: { 
+    fontSize: 16, 
+    color: '#424242', 
+    marginLeft: 8 
+  },
+  subTitle: { 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    marginTop: 8, 
+    color: '#757575' 
+  },
+  acceptButtonContainer: { 
+    alignItems: 'center', 
+    marginTop: 16,
+  },
+  acceptButton: { 
+    width: '100%', 
+    paddingVertical: 12, 
+    borderRadius: 8,
+    alignItems: 'center', 
+    justifyContent: 'center' 
+  },
+  acceptButtonText: { 
+    color: '#ffffff', 
+    fontWeight: 'bold', 
+    fontSize: 16 
+  },
+  emptyText: { 
+    textAlign: 'center', 
+    marginTop: 20, 
+    fontSize: 18, 
+    color: '#757575' 
+  },
 });

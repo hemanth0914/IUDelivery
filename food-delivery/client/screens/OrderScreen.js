@@ -51,7 +51,8 @@ const OrderScreen = () => {
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude,
             },
-            status: 'NotPicked'
+            status: 'NotPicked',
+            deliveryPerson: ''
         };
     
         try {

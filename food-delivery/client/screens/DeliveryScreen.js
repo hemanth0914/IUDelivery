@@ -17,6 +17,8 @@ const DeliveryScreen = () => {
   const userLocation = useSelector(selectUserLocation);
   const [orderStatus, setOrderStatus] = useState('Order is getting picked');
   const [estimatedTime, setEstimatedTime] = useState('50-60 minutes');
+  const [deliveryPerson, setDeliveryPerson] = useState('');
+
 
   // useRef to store interval ID so we can clear it
   const intervalRef = useRef(null);
@@ -48,10 +50,12 @@ const DeliveryScreen = () => {
       try {
         const response = await fetch(`http://192.168.0.107:8000/orders/${order_id}/getstatus`);
         const data = await response.json();
-        
+        console.log("Fetched order status data:", data);
+
         if (data.status === 'Order on the way' && orderStatus !== 'Order on the way') {
           setOrderStatus('Order is on the way');
           setEstimatedTime('30-40 minutes');
+          setDeliveryPerson(data.deliveryPerson); // Set delivery person from API response
 
           // Clear interval to stop polling
           if (intervalRef.current) {
@@ -137,7 +141,7 @@ const DeliveryScreen = () => {
         </View>
         <View className='flex-row m-5 rounded-full shadow items-center justify-between px-8' style={{ backgroundColor: themeColors.bgColor(0.4), height: 90, width: 350 }}>
           <View>
-            <Text className='font-extrabold text-lg text-white'>Hemanth</Text>
+            <Text className='font-extrabold text-lg text-white'>{deliveryPerson}</Text>
             <Text className='font-semibold text-white'>Your Rider</Text>
           </View>
           <TouchableOpacity className='bg-white p-2 rounded-full'>

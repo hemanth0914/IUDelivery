@@ -4,10 +4,12 @@ import {
 } from 'react-native';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 const OrderDetailScreen = ({ route }) => {
   const { order } = route.params;
   const [loading, setLoading] = useState(false);
+  const user_name = useSelector((state) => state.auth.name);
 
   const handleStatusUpdate = async () => {
     setLoading(true);
@@ -15,7 +17,10 @@ const OrderDetailScreen = ({ route }) => {
       const response = await fetch(`http://192.168.0.107:8000/orders/${order._id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'Order on the way' }),
+        body: JSON.stringify({
+          status: 'Order on the way',
+          deliveryPerson: user_name,
+        }),
       });
 
       if (!response.ok) {
@@ -66,7 +71,7 @@ const OrderDetailScreen = ({ route }) => {
             disabled={loading}
           >
             {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
+              <ActivityIndicator size={20} color="#fff" />
             ) : (
               <Text style={styles.buttonText}>Mark as Order on the Way</Text>
             )}

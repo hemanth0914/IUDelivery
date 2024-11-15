@@ -177,7 +177,7 @@ const HomeScreen = () => {
     </TouchableOpacity>
 
       {/* Main Content */}
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 270 }}>
         {/* Categories */}
         {/* <Categories/> */}
 
@@ -191,7 +191,7 @@ const HomeScreen = () => {
         </View>
 
         {/* Featured Cafe Section */}
-        <View className='mt-5 mb-20 mx-0'>
+        <View className='mt-5 mb-30 mx-0'>
             <FeaturedRow
                 title="Cafes"
                 restaurants={cafeData} // Use the filtered cafes
