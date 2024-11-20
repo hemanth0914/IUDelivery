@@ -12,9 +12,9 @@ const PreviousOrdersScreen = () => {
       console.log("Fetching orders for user:", user_name);
       const response = await fetch(`http://192.168.0.107:8000/orders/by-user/${user_name}`);
       
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Network response was not ok');
+      // }
       
       const data = await response.json();
       setOrders(data);
@@ -23,7 +23,7 @@ const PreviousOrdersScreen = () => {
     } catch (err) {
       console.error("Error fetching orders:", err);
       setOrders([]);
-      setError('No orders found for this user or an error occurred');
+      setError('No orders found for this user');
     }
   };
 
@@ -34,12 +34,16 @@ const PreviousOrdersScreen = () => {
   const renderOrder = ({ item }) => (
     <View style={styles.orderItem}>
       <Text style={styles.orderText}>
-        Eatery: <Text style={styles.orderDetailText}>{item.eatery_name}</Text>
+        Eatery: <Text style={styles.orderDetailText}>{item.eatery_name || 'Unknown'}</Text>
       </Text>
       <Text style={styles.orderText}>Dishes:</Text>
-      {item.dishes.map((dish, index) => (
-        <Text key={`${item.order_id}-${index}`} style={styles.dishText}>• {dish.name}</Text>
-      ))}
+      {(item.dishes && item.dishes.length > 0) ? (
+        item.dishes.map((dish, index) => (
+          <Text key={`${item.order_id}-${index}`} style={styles.dishText}>• {dish.name}</Text>
+        ))
+      ) : (
+        <Text style={styles.dishText}>No dishes available</Text>
+      )}
     </View>
   );
 
